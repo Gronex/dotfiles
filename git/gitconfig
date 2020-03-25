@@ -4,6 +4,13 @@
 [user]
     useConfigOnly = true
 
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+
+
+
+
 # Allow local customizations in the .gitconfig_local file
 [include]
     path = ~/.gitconfig_local
