@@ -1,3 +1,1 @@
-Import-Module posh-git
-
-Set-Alias -Name ll -Value ls
+. $PSScriptRoot/Shared.powershell_profile.ps1
