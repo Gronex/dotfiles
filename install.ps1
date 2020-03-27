@@ -15,6 +15,7 @@ $containingFolders = Get-ChildItem -Directory
 $filemap = @{}
 
 foreach ($folder in $containingFolders) {
+    # TODO: Change format to support duplicate keys
     $filemapPath = Join-Path -Path $folder -ChildPath "filemap.json"
     if (-not (Test-Path $filemapPath)) {
         continue;

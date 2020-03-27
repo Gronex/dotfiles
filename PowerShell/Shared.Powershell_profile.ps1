@@ -1,7 +1,12 @@
 
 . $PSScriptRoot/Aliases.ps1
 
-Import-Module posh-git
+if (Get-Module -ListAvailable -Name posh-git) {
+    Import-Module posh-git
+} 
+else {
+    Write-Warning "posh-git not imported"
+}
 
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {

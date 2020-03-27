@@ -1,6 +1,8 @@
 {
-    "Shared.Powershell_profile.ps1": "~\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1",
-    "Core.Powershell_profile.ps1": "~\\Documents\\PowerShell\\Core.Powershell_profile.ps1",
+    "Core.Powershell_profile.ps1": "~\\Documents\\PowerShell\\Microsoft.Powershell_profile.ps1",
     "Shared.Powershell_profile.ps1": "~\\Documents\\WindowsPowerShell\\Shared.Powershell_profile.ps1",
-    "Windows.Powershell_profile.ps1": "~\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1"
+    "Shared.Powershell_profile.ps1": "~\\Documents\\PowerShell\\Shared.PowerShell_profile.ps1",
+    "Windows.Powershell_profile.ps1": "~\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1",
+    "Aliases.ps1": "~\\Documents\\WindowsPowerShell\\Aliases.ps1",
+    "Aliases.ps1": "~\\Documents\\PowerShell\\Aliases.ps1"
 }
