@@ -1,4 +1,9 @@
 
+. $PSScriptRoot/Aliases.ps1
+
 Import-Module posh-git
 
-Set-Alias -Name ll -Value ls
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+    Import-Module "$ChocolateyProfile"
+}
