@@ -5,10 +5,11 @@ param (
     $force
 )
 
-if (-not $force) {
-    Write-Host "Would delete:"
-    git branch --merged develop | findstr /v "develop$" | findstr /v "master$"
+$branches = @(git branch --merged | Select-String -Pattern '^(\*.*|\s*develop)$' -NotMatch -Raw | ForEach-Object {$_.Trim()})
+
+if ($force -and $branches) {
+    git branch -d $branches
 }
 else {
-    git branch --merged develop | findstr /v "develop$" | findstr /v "master$" | ForEach-Object { git branch -d $_.Trim() }
+    Format-List $branches
 }
