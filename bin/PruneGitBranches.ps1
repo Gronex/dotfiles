@@ -11,5 +11,5 @@ if ($force -and $branches) {
     git branch -d $branches
 }
 else {
-    Format-List $branches
+    $branches | Format-List
 }
