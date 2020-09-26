@@ -24,7 +24,7 @@ foreach ($folder in $containingFolders) {
 
     Write-Host $folder.FullName
     foreach ($map in $localFilemap.PSObject.Properties) {
-        $fileLocation = Join-Path -Path $folder -ChildPath $map.Name
+        $fileLocation = Join-Path -Path $folder.FullName -ChildPath $map.Name
         $filemap[$fileLocation] = $map.Value
     }
 }
@@ -38,8 +38,13 @@ foreach ($map in $filemap.GetEnumerator()) {
             Write-Host "$target already exists. Skipping because of overwite setting"
             continue;
         }
-    
-        New-Item -ItemType SymbolicLink -Path $target -Value $map.Name -Force:$Overwrite
+        write-Host "$target -> $($map.Name)"
+        $folder = Split-Path -Parent $target
+        if(-not (Test-Path -PathType Container $folder)) {
+            New-Item -ItemType Directory $folder
+        }
+
+        New-Item -ItemType SymbolicLink -Path "$target" -Value $map.Name -Force:$Overwrite
     }
 }
 
