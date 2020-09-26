@@ -33,12 +33,14 @@ Write-Host "Filemaps:"
 $filemap | Format-Table
 
 foreach ($map in $filemap.GetEnumerator()) {
-    if ((Test-Path $map.Value) -and -not $overwrite) {
-        Write-Host "$($map.Value) already exists. Skipping because of overwite setting"
-        continue;
+    foreach($target in $map.Value) {
+        if ((Test-Path $target) -and -not $overwrite) {
+            Write-Host "$target already exists. Skipping because of overwite setting"
+            continue;
+        }
+    
+        New-Item -ItemType SymbolicLink -Path $target -Value $map.Name -Force:$Overwrite
     }
-
-    New-Item -ItemType SymbolicLink -Path $map.Value -Value $map.Name -Force:$Overwrite
 }
 
 Pop-Location
