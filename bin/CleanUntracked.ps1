@@ -1,21 +1,20 @@
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [Switch]
+    $Force
+)
+
 $items = git status --porcelain
 
 $currentLocation = Get-Location
 
-$toClean = $items | Where-Object { $_.StartsWith("??") }
+$toClean = $items | Where-Object { $_.StartsWith("??") } | ForEach-Object { $_.TrimStart('?', ' ') } | ForEach-Object { "$currentLocation/$_" }
 
-foreach($item in $toClean){
-  $itemPath = $item.TrimStart('?', ' ')
-  Write-Host "$currentLocation/$itemPath"
-}
-
-$answer = Read-Host -Prompt "Delete items? [y/n]"
-
-if($answer -eq "y"){
-  foreach($item in $toClean)
-  {
-    $itemPath = $item.TrimStart('?', ' ')
-    Write-Output "$currentLocation/$itemPath"
-    Remove-Item -Path "$currentLocation/$itemPath" -Recurse
+foreach($item in $toClean)
+{
+  Write-Host $item
+  if($force){
+    Remove-Item -Path $item -Recurse
   }
 }
