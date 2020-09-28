@@ -24,7 +24,7 @@ foreach ($folder in $containingFolders) {
 
     Write-Host $folder.FullName
     foreach ($map in $localFilemap.PSObject.Properties) {
-        $fileLocation = Join-Path -Path $folder -ChildPath $map.Name
+        $fileLocation = Join-Path -Path $folder.FullName -ChildPath $map.Name
         $filemap[$fileLocation] = $map.Value
     }
 }
@@ -33,12 +33,19 @@ Write-Host "Filemaps:"
 $filemap | Format-Table
 
 foreach ($map in $filemap.GetEnumerator()) {
-    if ((Test-Path $map.Value) -and -not $overwrite) {
-        Write-Host "$($map.Value) already exists. Skipping because of overwite setting"
-        continue;
-    }
+    foreach($target in $map.Value) {
+        if ((Test-Path $target) -and -not $overwrite) {
+            Write-Host "$target already exists. Skipping because of overwite setting"
+            continue;
+        }
+        write-Host "$target -> $($map.Name)"
+        $folder = Split-Path -Parent $target
+        if(-not (Test-Path -PathType Container $folder)) {
+            New-Item -ItemType Directory $folder
+        }
 
-    New-Item -ItemType SymbolicLink -Path $map.Value -Value $map.Name -Force:$Overwrite
+        New-Item -ItemType SymbolicLink -Path "$target" -Value $map.Name -Force:$Overwrite
+    }
 }
 
 Pop-Location
