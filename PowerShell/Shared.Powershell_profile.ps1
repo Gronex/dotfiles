@@ -5,7 +5,15 @@ if (Get-Module -ListAvailable -Name posh-git) {
     Import-Module posh-git
 } 
 else {
-    Write-Warning "posh-git not imported"
+    Write-Verbose "posh-git not imported"
+}
+
+if (Get-Module -ListAvailable -Name oh-my-posh) {
+    Import-Module oh-my-posh
+    Set-PoshPrompt -Theme jandedobbeleer
+}
+else {
+    Write-Verbose "oh-my-posh not imported"
 }
 
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
