@@ -33,8 +33,6 @@
             // https://github.com/microsoft/cascadia-code/releases
             "fontFace": "Cascadia Code PL", // "Cascadia Mono PL",
             // "fontFace": "Noto Mono for Powerline",
-            "fontSize": 11,
-            "fontWeight": "medium"
         },
         "list":
         [
