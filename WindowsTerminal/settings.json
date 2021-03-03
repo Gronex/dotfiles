@@ -30,7 +30,9 @@
             // Put settings here that you want to apply to all profiles.
             "colorScheme": "Dracula",
             "bellStyle": "none",
-            "fontFace": "Noto Mono for Powerline",
+            // https://github.com/microsoft/cascadia-code/releases
+            "fontFace": "Cascadia Code PL", // "Cascadia Mono PL",
+            // "fontFace": "Noto Mono for Powerline",
             "fontSize": 11,
             "fontWeight": "medium"
         },
