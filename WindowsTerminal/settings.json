@@ -31,7 +31,9 @@
             "colorScheme": "Dracula",
             "bellStyle": "none",
             // https://www.nerdfonts.com/font-downloads
-            "fontFace": "CaskaydiaCove NF"
+            "fontFace": "CaskaydiaCove NF",
+            "useAcrylic": true,
+            "acrylicOpacity": 0.75
         },
         "list":
         [
