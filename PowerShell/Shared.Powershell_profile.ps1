@@ -25,3 +25,5 @@ $profileRoot = Get-Item $MyInvocation.MyCommand.Definition | Select-Object -Expa
 
 
 $env:Path += ";$profileRoot/../bin"
+
+Import-Module "$PSScriptRoot/Utility.psm1"
