@@ -10,7 +10,7 @@ else {
 
 if (Get-Module -ListAvailable -Name oh-my-posh) {
     Import-Module oh-my-posh
-    Set-PoshPrompt -Theme jandedobbeleer
+    Set-PoshPrompt -Theme agnosterplus
 }
 else {
     Write-Verbose "oh-my-posh not imported"
