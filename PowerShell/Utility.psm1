@@ -25,7 +25,6 @@ function Get-Base64Decoding{
 
 function Remove-UntrackedGit {
     [CmdletBinding()]
-    [Alias('PruneGit')]
     param (
         [Parameter()]
         [Switch]
@@ -65,6 +64,7 @@ function Get-FileLocker {
 
 function Remove-MergedBranches {
     [CmdletBinding()]
+    [Alias('PruneGit')]
     param (
         [Parameter()]
         [Switch]
