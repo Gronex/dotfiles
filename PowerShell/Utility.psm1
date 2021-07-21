@@ -35,7 +35,7 @@ function Remove-UntrackedGit {
 
     $currentLocation = Get-Location
 
-    $toClean = $items | Where-Object { $_.StartsWith("??") } | ForEach-Object { $_.TrimStart('?', ' ') } | ForEach-Object { Join-Path -Path $currentLocation -ChildPath $_ }
+    $toClean = $items | Where-Object { $_.StartsWith("??") } | ForEach-Object { $_.TrimStart('?', ' ') } | ForEach-Object { $_.Trim('"')} | ForEach-Object { Join-Path -Path $currentLocation -ChildPath $_ }
 
     foreach($item in $toClean)
     {
