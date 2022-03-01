@@ -81,8 +81,45 @@ function Remove-MergedBranches {
     }
 }
 
+function Enter-Symlink {
+    [CmdletBinding()]
+    param (
+        # Specifies a path to one or more locations.
+        [Parameter(Mandatory=$true,
+                   Position=0,
+                   ParameterSetName="Path",
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   HelpMessage="Path to one or more locations.")]
+        [Alias("PSPath")]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Path
+    )
+
+    if($null -eq $Path) {
+        $path = Get-Location
+    }
+    $Path = Resolve-Path $Path
+    Write-Host "From path: $Path"
+    $parent = $Path
+
+    $remaining = "/"
+    while (-not (Get-Item -Path $parent).Target) {
+
+        $remaining = Join-Path $remaining $(Split-Path $Path -Leaf)
+        Write-Output $remaining
+        $parent = Split-Path $Path -Parent
+        Write-Output $parent
+    }
+    $targetPath = Join-Path (Get-Item -Path $parent).Target $remaining
+    Write-Host "Target: $targetPath"
+    Push-Location $targetPath
+}
+
 Export-ModuleMember -Function Get-Base64Encoding
 Export-ModuleMember -Function Get-Base64Decoding
 Export-ModuleMember -Function Remove-UntrackedGit
 Export-ModuleMember -Function Get-FileLocker
 Export-ModuleMember -Function Remove-MergedBranches -Alias PruneGit
+Export-ModuleMember -Function Enter-Symlink

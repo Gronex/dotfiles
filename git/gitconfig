@@ -12,7 +12,7 @@
     log = true
 
 [credential]
-	helper = manager
+	helper = manager-core
 
 
 # Allow local customizations in the .gitconfig_local file
