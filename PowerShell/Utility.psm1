@@ -83,6 +83,9 @@ function Remove-MergedBranches {
 
 function Enter-Symlink {
     [CmdletBinding()]
+    [Alias('Enter-Junction')]
+    [Alias('Push-Symlink')]
+    [Alias('Push-Junction')]
     param (
         # Specifies a path to one or more locations.
         [Parameter(Mandatory=$true,
@@ -107,9 +110,9 @@ function Enter-Symlink {
     $remaining = "/"
     while (-not (Get-Item -Path $parent).Target) {
 
-        $remaining = Join-Path $remaining $(Split-Path $Path -Leaf)
+        $remaining = Join-Path $(Split-Path $parent -Leaf) $remaining
         Write-Output $remaining
-        $parent = Split-Path $Path -Parent
+        $parent = Split-Path $parent -Parent
         Write-Output $parent
     }
     $targetPath = Join-Path (Get-Item -Path $parent).Target $remaining
@@ -122,4 +125,4 @@ Export-ModuleMember -Function Get-Base64Decoding
 Export-ModuleMember -Function Remove-UntrackedGit
 Export-ModuleMember -Function Get-FileLocker
 Export-ModuleMember -Function Remove-MergedBranches -Alias PruneGit
-Export-ModuleMember -Function Enter-Symlink
+Export-ModuleMember -Function Enter-Symlink -Alias @("Push-Symlink", "Enter-Junction", "Push-Junction")
