@@ -88,7 +88,7 @@ function Enter-Symlink {
     [Alias('Push-Junction')]
     param (
         # Specifies a path to one or more locations.
-        [Parameter(Mandatory=$true,
+        [Parameter(Mandatory=$false,
                    Position=0,
                    ParameterSetName="Path",
                    ValueFromPipeline=$true,
@@ -100,8 +100,8 @@ function Enter-Symlink {
         $Path
     )
 
-    if($null -eq $Path) {
-        $path = Get-Location
+    if([String]::IsNullOrWhiteSpace($Path)) {
+        $Path = Get-Location
     }
     $Path = Resolve-Path $Path
     Write-Host "From path: $Path"
@@ -111,9 +111,13 @@ function Enter-Symlink {
     while (-not (Get-Item -Path $parent).Target) {
 
         $remaining = Join-Path $(Split-Path $parent -Leaf) $remaining
-        Write-Output $remaining
+        Write-Verbose $remaining
         $parent = Split-Path $parent -Parent
-        Write-Output $parent
+        Write-Verbose $parent
+        if([String]::IsNullOrWhiteSpace($parent)) {
+            Write-Host "No Symlink in $Path"
+            return;
+        }
     }
     $targetPath = Join-Path (Get-Item -Path $parent).Target $remaining
     Write-Host "Target: $targetPath"
