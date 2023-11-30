@@ -166,6 +166,25 @@ function Update-IISCredentials {
     }
 }
 
+function Build-CryptographyKey {
+    param (
+        [Parameter(Mandatory=$true)]
+        [int]
+        $Size
+    )
+
+    if ($Size % 8 -ne 0) {
+        Write-Error "Size parameter must be devisable by 8"
+        return
+    }
+
+    $bufferSize = $Size / 8
+    $random = [System.Security.Cryptography.RandomNumberGenerator]::Create();
+    $buffer = New-Object byte[] $bufferSize;
+    $random.GetBytes($buffer)
+    [System.Convert]::ToBase64String($buffer)
+}
+
 Export-ModuleMember -Function Get-Base64Encoding
 Export-ModuleMember -Function Get-Base64Decoding
 Export-ModuleMember -Function Remove-UntrackedGit
@@ -173,3 +192,4 @@ Export-ModuleMember -Function Get-FileLocker
 Export-ModuleMember -Function Remove-MergedBranches -Alias PruneGit
 Export-ModuleMember -Function Enter-Symlink -Alias @("Push-Symlink", "Enter-Junction", "Push-Junction")
 Export-ModuleMember -Function Update-IISCredentials
+Export-ModuleMember -Function Build-CryptographyKey
