@@ -122,7 +122,6 @@ function Enter-Symlink {
         $Path = Get-Location
     }
     $Path = Resolve-Path $Path
-    Write-Host "From path: $Path"
     $parent = $Path
 
     $remaining = "/"
@@ -133,11 +132,13 @@ function Enter-Symlink {
         $parent = Split-Path $parent -Parent
         Write-Verbose $parent
         if([String]::IsNullOrWhiteSpace($parent)) {
-            Write-Host "No Symlink in $Path"
+            Write-Verbose "No Symlink in $Path"
+            Push-Location $Path
             return;
         }
     }
     $targetPath = Join-Path (Get-Item -Path $parent).Target $remaining
+    Write-Host "From path: $Path"
     Write-Host "Target: $targetPath"
     Push-Location $targetPath
 }
