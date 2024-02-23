@@ -1,4 +1,6 @@
-[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(
+    SupportsShouldProcess,
+    ConfirmImpact = 'High')]
 param (
     # If existing files should be overwritten
     [switch]
