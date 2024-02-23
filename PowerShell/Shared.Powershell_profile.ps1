@@ -21,9 +21,4 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
-$profileRoot = Get-Item $MyInvocation.MyCommand.Definition | Select-Object -ExpandProperty Target | Split-Path -Parent
-
-
-$env:Path += ";$profileRoot/../bin"
-
 Import-Module "$PSScriptRoot/Utility.psm1"

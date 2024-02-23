@@ -186,6 +186,38 @@ function Build-CryptographyKey {
     [System.Convert]::ToBase64String($buffer)
 }
 
+Function Get-ProjectReferences
+{
+    [CmdletBinding()]
+    param (
+        # Specifies a path to one or more locations.
+        [Parameter(Mandatory=$true,
+                   Position=0,
+                   ParameterSetName="folder",
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   HelpMessage="Path to one or more locations.")]
+        [Alias("PSPath")]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $rootFolder
+    )
+    $projectFiles = Get-ChildItem $rootFolder -Filter *.csproj -Recurse
+    $ns = @{ defaultNamespace = "http://schemas.microsoft.com/developer/msbuild/2003" }
+
+    $projectFiles | ForEach-Object {
+        $projectFile = $_ | Select-Object -ExpandProperty FullName
+        $projectName = $_ | Select-Object -ExpandProperty BaseName
+        $projectXml = [xml](Get-Content $projectFile)
+
+        $projectReferences = $projectXml | Select-Xml '//defaultNamespace:ProjectReference/defaultNamespace:Name' -Namespace $ns | Select-Object -ExpandProperty Node | Select-Object -ExpandProperty "#text"
+
+        $projectReferences | ForEach-Object {
+            "[" + $projectName + "] -> [" + $_ + "]"
+        }
+    }
+}
+
 Export-ModuleMember -Function Get-Base64Encoding
 Export-ModuleMember -Function Get-Base64Decoding
 Export-ModuleMember -Function Remove-UntrackedGit
@@ -194,3 +226,4 @@ Export-ModuleMember -Function Remove-MergedBranches -Alias PruneGit
 Export-ModuleMember -Function Enter-Symlink -Alias @("Push-Symlink", "Enter-Junction", "Push-Junction")
 Export-ModuleMember -Function Update-IISCredentials
 Export-ModuleMember -Function Build-CryptographyKey
+Export-ModuleMember -Function Get-ProjectReferences
