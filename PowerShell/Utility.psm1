@@ -66,10 +66,15 @@ function Remove-MergedBranches {
         ConfirmImpact = 'High')]
     [Alias('PruneGit')]
     param (
-        [Parameter()]
         [Switch]
-        $Remote
+        $Remote,
+        [Switch]
+        $Force
     )
+
+    if ($Force -and -not $Confirm){
+        $ConfirmPreference = 'None'
+    }
 
     if($Remote) {
         $branches = @(git branch -a --merged | Select-String -Pattern '^\s{2}remotes/(.+)/(?!develop|(master|main|dev|develop|HEAD))' -Raw)
@@ -79,20 +84,21 @@ function Remove-MergedBranches {
     }
 
     foreach($branch in $branches) {
-        $diff = -split (git rev-list --left-right --count HEAD)
+        $revList = Invoke-Expression -Command "git rev-list --left-right --count HEAD...$($branch)"
+        $diff = -split $revList
 
-        Write-Host "$branch [Ahead: $($diff[1]), Behind: $($diff[0])]"
+        $branchStats = "[Ahead: $($diff[1]), Behind: $($diff[0])]"
 
         if($Remote) {
             $branch = $branch | Select-String -Pattern 'remotes/(.+?)/(.+)'
             $origin = $branch.Matches.Groups[1]
             $target = $branch.Matches.Groups[2]
-            if($PSCmdlet.ShouldProcess("$origin/$target", "git push -d")){
+            if($PSCmdlet.ShouldProcess("$origin/$target $branchStats", "git push -d")){
                 git push -d $origin $target
             }
         }
         else {
-            if($PSCmdlet.ShouldProcess($branch, "git branch -d")){
+            if($PSCmdlet.ShouldProcess("$branch $branchStats", "git branch -d")){
                 git branch -d $branch
             }
         }
@@ -186,8 +192,7 @@ function Build-CryptographyKey {
     [System.Convert]::ToBase64String($buffer)
 }
 
-Function Get-ProjectReferences
-{
+Function Get-ProjectReferences {
     [CmdletBinding()]
     param (
         # Specifies a path to one or more locations.
