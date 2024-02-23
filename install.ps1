@@ -1,9 +1,8 @@
 [CmdletBinding(SupportsShouldProcess)]
 param (
     # If existing files should be overwritten
-    [Parameter()]
     [switch]
-    $Overwrite
+    $Force
 )
 
 $ErrorActionPreference = 'Stop';
@@ -34,17 +33,17 @@ $filemap | Format-Table
 
 foreach ($map in $filemap.GetEnumerator()) {
     foreach($target in $map.Value) {
-        if ((Test-Path $target) -and -not $overwrite) {
+        if ((Test-Path $target) -and -not $Force) {
             Write-Host "$target already exists. Skipping because of overwite setting"
             continue;
         }
-        write-Host "$target -> $($map.Name)"
+        Write-Host "$target -> $($map.Name)"
         $folder = Split-Path -Parent $target
         if(-not (Test-Path -PathType Container $folder)) {
             New-Item -ItemType Directory $folder
         }
 
-        New-Item -ItemType SymbolicLink -Path "$target" -Value $map.Name -Force:$Overwrite
+        New-Item -ItemType SymbolicLink -Path "$target" -Value $map.Name -Force:$Force
     }
 }
 
