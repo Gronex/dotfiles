@@ -39,3 +39,5 @@
 	defaultBranch = main
 [commit]
 	cleanup = scissors
+[diff]
+	colorMoved = default
