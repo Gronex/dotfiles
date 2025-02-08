@@ -23,7 +23,7 @@ if (Test-Path($ChocolateyProfile)) {
 
 Import-Module "$PSScriptRoot/Utility.psm1"
 
-$completionScripts = Get-ChildItem -Path "C:/completions/" -Filter *.ps1
+$completionScripts = Get-ChildItem -Path "C:/completions/" -Filter *.ps1  -ErrorAction SilentlyContinue
 
 foreach($script in $completionScripts) {
     Write-Verbose "Loading completion: $script"
