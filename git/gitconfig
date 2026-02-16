@@ -31,7 +31,7 @@
 [log]
 	date = iso
 [core]
-	autocrlf = false
+	autocrlf = true
 [rerere]
 	verbose = true
 	enabled = true

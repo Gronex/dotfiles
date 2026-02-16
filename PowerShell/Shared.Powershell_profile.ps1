@@ -29,3 +29,7 @@ foreach($script in $completionScripts) {
     Write-Verbose "Loading completion: $script"
     . $script
 }
+
+if (Test-Path("~/Powershell_Profile.ps1")) {
+    Invoke-Expression -Command "~/Powershell_Profile.ps1"
+}
