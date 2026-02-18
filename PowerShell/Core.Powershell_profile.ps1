@@ -1,1 +1,1 @@
-. $PSScriptRoot/Shared.powershell_profile.ps1
+. $PSScriptRoot/Shared.Powershell_profile.ps1

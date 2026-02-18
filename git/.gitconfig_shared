@@ -12,10 +12,6 @@
     log = true
 	conflictstyle = zdiff3
 
-
-# Allow local customizations in the .gitconfig_local file
-[include]
-    path = ~/.gitconfig_local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

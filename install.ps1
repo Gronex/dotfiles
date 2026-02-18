@@ -1,52 +1,38 @@
-[CmdletBinding(
-    SupportsShouldProcess,
-    ConfirmImpact = 'High')]
-param (
-    # If existing files should be overwritten
-    [switch]
-    $Force
+#!/usr/bin/env pwsh
+[CmdletBinding(SupportsShouldProcess)]
+param(
+    [string[]]$Modules,
+    [switch]$Force
 )
 
-$ErrorActionPreference = 'Stop';
+$ErrorActionPreference = 'Stop'
 
-Push-Location $PSScriptRoot
+Import-Module (Join-Path $PSScriptRoot 'lib.psm1') -Force
 
-$containingFolders = Get-ChildItem -Directory
+# Discover modules: subdirectories containing setup.ps1
+$allModules = Get-ChildItem -Path $PSScriptRoot -Directory |
+    Where-Object { Test-Path (Join-Path $_.FullName 'setup.ps1') } |
+    Select-Object -ExpandProperty Name
 
-$filemap = @{}
-
-foreach ($folder in $containingFolders) {
-    # TODO: Change format to support duplicate keys
-    $filemapPath = Join-Path -Path $folder -ChildPath "filemap.json"
-    if (-not (Test-Path $filemapPath)) {
-        continue;
+if ($Modules) {
+    foreach ($m in $Modules) {
+        if ($m -notin $allModules) {
+            Write-Error "Module '$m' not found. Available: $($allModules -join ', ')"
+            return
+        }
     }
-    $localFilemap = Get-Content $filemapPath | ConvertFrom-Json
-
-    Write-Host $folder.FullName
-    foreach ($map in $localFilemap.PSObject.Properties) {
-        $fileLocation = Join-Path -Path $folder.FullName -ChildPath $map.Name
-        $filemap[$fileLocation] = $map.Value
-    }
+} else {
+    $Modules = $allModules
 }
 
-Write-Host "Filemaps:"
-$filemap | Format-Table
-
-foreach ($map in $filemap.GetEnumerator()) {
-    foreach($target in $map.Value) {
-        if ((Test-Path $target) -and -not $Force) {
-            Write-Host "$target already exists. Skipping because of overwite setting"
-            continue;
-        }
-        Write-Host "$target -> $($map.Name)"
-        $folder = Split-Path -Parent $target
-        if(-not (Test-Path -PathType Container $folder)) {
-            New-Item -ItemType Directory $folder
-        }
-
-        New-Item -ItemType SymbolicLink -Path "$target" -Value $map.Name -Force:$Force
-    }
+for ($i = 0; $i -lt $Modules.Count; $i++) {
+    $m = $Modules[$i]
+    $step = "$($i + 1)/$($Modules.Count)"
+    $pct = [math]::Floor(($i / $Modules.Count) * 100)
+    Write-Progress -Activity 'Installing dotfiles' -Status "[$step] $m" -PercentComplete $pct
+    Write-Host "`n[$step] $m" -ForegroundColor Cyan
+    $setupScript = Join-Path $PSScriptRoot $m 'setup.ps1'
+    & $setupScript -Force:$Force
 }
 
-Pop-Location
+Write-Progress -Activity 'Installing dotfiles' -Completed
