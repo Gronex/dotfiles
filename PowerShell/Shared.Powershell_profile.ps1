@@ -8,12 +8,11 @@ else {
     Write-Verbose "posh-git not imported"
 }
 
-if (Get-Module -ListAvailable -Name oh-my-posh) {
-    Import-Module oh-my-posh
-    Set-PoshPrompt -Theme agnosterplus
+if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
+    oh-my-posh init pwsh --config "$PSScriptRoot/../config/oh-my-posh.toml" | Invoke-Expression
 }
 else {
-    Write-Verbose "oh-my-posh not imported"
+    Write-Verbose "oh-my-posh not found"
 }
 
 if ($IsWindows) {
@@ -31,6 +30,7 @@ if ($IsWindows) {
 
 Import-Module "$PSScriptRoot/Utility.psm1"
 
-if (Test-Path("~/Powershell_Profile.ps1")) {
-    Invoke-Expression -Command "~/Powershell_Profile.ps1"
+$userProfile = Join-Path $HOME "Powershell_Profile.ps1"
+if (Test-Path $userProfile) {
+    . $userProfile
 }

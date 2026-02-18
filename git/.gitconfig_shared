@@ -38,3 +38,4 @@
 	cleanup = scissors
 [diff]
 	colorMoved = default
+	algorithm = histogram
