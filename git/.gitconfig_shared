@@ -27,7 +27,8 @@
 [log]
 	date = iso
 [core]
-	autocrlf = true
+	autocrlf = false
+	eol = lf
 [rerere]
 	verbose = true
 	enabled = true
