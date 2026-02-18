@@ -61,4 +61,45 @@ function Install-Template {
     }
 }
 
-Export-ModuleMember -Function Get-Platform, Test-Platform, Install-Link, Install-Template
+# Append a source line to a file, using a marker comment to detect/update it
+function Install-SourceLine {
+    [CmdletBinding(SupportsShouldProcess)]
+    param(
+        [Parameter(Mandatory)][string]$Target,
+        [Parameter(Mandatory)][string]$SourcePath,
+        [string]$Marker = '# dotfiles-managed',
+        [switch]$Force
+    )
+    $Target = $Target.Replace('~', $HOME)
+    $sourceLine = "source $SourcePath"
+
+    if (Test-Path $Target) {
+        $lines = Get-Content $Target
+        $markerIndex = [array]::FindIndex($lines, [Predicate[object]]{ param($l) $l -eq $Marker })
+
+        if ($markerIndex -ge 0) {
+            $nextIndex = $markerIndex + 1
+            if ($nextIndex -lt $lines.Count -and $lines[$nextIndex] -eq $sourceLine) {
+                if (-not $Force) {
+                    Write-Host "[SKIP]  $Target already sources $SourcePath"
+                    return
+                }
+            }
+            # Update existing source line
+            if ($PSCmdlet.ShouldProcess($Target, "Update source line to '$sourceLine'")) {
+                Write-Host "[UPDT]  $Target -> $sourceLine"
+                $lines[$nextIndex] = $sourceLine
+                $lines | Set-Content $Target
+            }
+            return
+        }
+    }
+
+    # Append marker + source line
+    if ($PSCmdlet.ShouldProcess($Target, "Append source line '$sourceLine'")) {
+        Write-Host "[SRCE]  $Target <- $sourceLine"
+        "`n$Marker`n$sourceLine" | Add-Content $Target
+    }
+}
+
+Export-ModuleMember -Function Get-Platform, Test-Platform, Install-Link, Install-Template, Install-SourceLine
