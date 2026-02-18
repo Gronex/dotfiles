@@ -11,6 +11,7 @@ alignment = "left"
 newline = true
 type = "prompt"
 
+
   [[blocks.segments]]
   type = "executiontime"
   style = "diamond"
@@ -36,7 +37,7 @@ type = "prompt"
   ]
   leading_diamond = "\ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} "
+  template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} "
   [blocks.segments.options]
   branch_template = "{{ trunc 25 .Branch }}"
   fetch_status = true
@@ -49,7 +50,7 @@ type = "prompt"
   foreground = "#E4F34A"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
+  template = " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -60,7 +61,7 @@ type = "prompt"
   foreground = "#7FD5EA"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue626{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+  template = " \ue626{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -71,7 +72,7 @@ type = "prompt"
   foreground = "#42E66C"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue718{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
+  template = " \ue718{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -82,7 +83,7 @@ type = "prompt"
   foreground = "#E64747"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue791{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+  template = " \ue791{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -93,7 +94,7 @@ type = "prompt"
   foreground = "#E64747"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue738{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+  template = " \ue738{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -104,7 +105,7 @@ type = "prompt"
   foreground = "#9B6BDF"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue624{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  template = " \ue624{{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
   [blocks.segments.options]
   fetch_version = true
 
@@ -126,7 +127,7 @@ type = "prompt"
   foreground = "#7B4F9E"
   leading_diamond = " \ue0b6"
   trailing_diamond = "\ue0b4"
-  template = "\ue77f {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+  template = " \ue77f.NET {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
@@ -162,7 +163,7 @@ type = "prompt"
   foreground = "#E64747"
   leading_diamond = "\ue0b6"
   trailing_diamond = "\ue0b0"
-  template = "\uf007 {{ .UserName }}"
+  template = " \uf007 {{ .UserName }} "
 
   [[blocks.segments]]
   type = "path"
@@ -171,6 +172,6 @@ type = "prompt"
   foreground = "#3EC669"
   leading_diamond = ""
   trailing_diamond = "\ue0b0"
-  template = "\ue5ff {{ .Path }} \u276f"
+  template = " \ue5ff {{ .Path }} \u276f "
   [blocks.segments.options]
   style = "agnoster"
