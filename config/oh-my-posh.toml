@@ -2,8 +2,13 @@
 version = 4
 # extends = "https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/bubblesextra.omp.json"
 final_space = true
-async = true
+# async = true # if true, first request is strange
 
+[upgrade]
+notice = true
+interval = "24h"
+auto = false
+source = "cdn"
 
 # Block 1: execution time + git + languages + battery
 [[blocks]]
