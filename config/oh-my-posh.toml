@@ -24,7 +24,7 @@ type = "prompt"
   foreground = "#AEA4BF"
   leading_diamond = "\ue0b6"
   trailing_diamond = "\ue0b4 "
-  template = "{{ .FormattedMs }}"
+  template = " 󰔟 {{ .FormattedMs }}"
   [blocks.segments.options]
   style = "austin"
   threshold = 150
