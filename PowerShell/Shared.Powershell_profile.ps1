@@ -1,5 +1,6 @@
+$realScriptRoot = Split-Path -Parent ((Get-Item $PSCommandPath).Target ?? $PSCommandPath)
 
-. $PSScriptRoot/Aliases.ps1
+. $realScriptRoot/Aliases.ps1
 
 if (Get-Module -ListAvailable -Name posh-git) {
     Import-Module posh-git
@@ -9,7 +10,8 @@ else {
 }
 
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    oh-my-posh init pwsh --config "$PSScriptRoot/../config/oh-my-posh.toml" | Invoke-Expression
+    $configPath = Resolve-Path "$realScriptRoot/../config/oh-my-posh.toml"
+    oh-my-posh init pwsh --config $configPath | Invoke-Expression
 }
 else {
     Write-Verbose "oh-my-posh not found"
@@ -28,7 +30,7 @@ if ($IsWindows) {
     }
 }
 
-Import-Module "$PSScriptRoot/Utility.psm1"
+Import-Module "$realScriptRoot/Utility.psm1"
 
 $userProfile = Join-Path $HOME "Powershell_Profile.ps1"
 if (Test-Path $userProfile) {
