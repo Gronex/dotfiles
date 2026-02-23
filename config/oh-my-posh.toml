@@ -150,9 +150,9 @@ type = "prompt"
   trailing_diamond = "\ue0b4"
   template = "{{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}"
   [blocks.segments.options]
-  charged_icon = " "
-  charging_icon = "\u21e1 "
-  discharging_icon = "\u21e3 "
+  charged_icon = "\uf240 "
+  charging_icon = "\uf0e7 "
+  discharging_icon = "\uf242 "
 
 
 # Block 2: username + path (input line)
