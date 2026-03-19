@@ -32,7 +32,7 @@ if ($IsWindows) {
 
 Import-Module "$realScriptRoot/Utility.psm1"
 
-$userProfile = Join-Path $HOME "Powershell_Profile.ps1"
+$userProfile = Join-Path $HOME ".config" "Powershell" "Powershell_Profile.ps1"
 if (Test-Path $userProfile) {
     . $userProfile
 }
