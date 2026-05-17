@@ -23,7 +23,7 @@ type = "prompt"
   leading_powerline_symbol = ""
   background = "#1A2330"
   foreground = "#9FACBA"
-  template = " 󱤦 {{ .FormattedMs }}"
+  template = " 󱤦 {{ .FormattedMs }} "
   [blocks.segments.options]
   style = "austin"
   threshold = 150
