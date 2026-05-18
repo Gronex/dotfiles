@@ -2,6 +2,8 @@
 version = 4
 final_space = true
 
+pwd = "osc7"
+
 [upgrade]
 notice = true
 interval = "24h"
