@@ -149,7 +149,7 @@ type = "prompt"
     "{{if eq \"Discharging\" .State.String}}#F58A8A{{end}}",
     "{{if eq \"Full\" .State.String}}#94C45C{{end}}"
   ]
-  template = " {{ if not .Error }}{{ .Icon }}{{ .Percentage }} {{ end }}{{ .Error }} "
+  template = " {{ if not .Error }}{{ .Icon }} {{ .Percentage }}{{ end }}{{ .Error }} "
   [blocks.segments.options]
   charged_icon = ""
   charging_icon = ""
