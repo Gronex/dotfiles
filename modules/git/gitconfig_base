@@ -1,2 +1,0 @@
-[include]
-    path = ${gitconfig_path}/.gitconfig_shared

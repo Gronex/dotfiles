@@ -1,5 +1,6 @@
 from modules.base_installer import BaseInstaller
-from modules.bash_installer import BashInstaller
+from modules.bash import BashInstaller
+from modules.git import GitInstaller
 from modules.module_config import ModuleConfig
 
 
@@ -15,9 +16,7 @@ def get_installer(module_config: ModuleConfig, *args, **kwargs) -> BaseInstaller
         case "bash":
             return BashInstaller(module_config, *args, **kwargs)
         case "git":
-            return None
-        case "oh-my-posh":
-            return None
+            return GitInstaller(module_config, *args, **kwargs)
         case "PowerShell":
             return None
         case _:

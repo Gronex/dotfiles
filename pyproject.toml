@@ -8,8 +8,16 @@ dependencies = [
     "ruff>=0.15.13",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
 [project.scripts]
 dotfiles = "installer.main:main"
 
 [tool.uv]
 package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
