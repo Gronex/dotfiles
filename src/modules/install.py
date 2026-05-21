@@ -2,6 +2,7 @@ from modules.base_installer import BaseInstaller
 from modules.bash import BashInstaller
 from modules.git import GitInstaller
 from modules.module_config import ModuleConfig
+from modules.powershell import PowerShellInstaller
 
 
 def install_module(module_config: ModuleConfig, *args, **kwargs):
@@ -12,12 +13,12 @@ def install_module(module_config: ModuleConfig, *args, **kwargs):
 
 
 def get_installer(module_config: ModuleConfig, *args, **kwargs) -> BaseInstaller | None:
-    match module_config.name:
+    match module_config.name.lower():
         case "bash":
             return BashInstaller(module_config, *args, **kwargs)
         case "git":
             return GitInstaller(module_config, *args, **kwargs)
-        case "PowerShell":
-            return None
+        case "powershell":
+            return PowerShellInstaller(module_config, *args, **kwargs)
         case _:
             return None

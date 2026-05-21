@@ -58,7 +58,9 @@ def install_command_args(parser: argparse._SubParsersAction[argparse.ArgumentPar
 def install(args):
     modules = list_modules()
     if args.module:
-        module = next((x for x in modules if args.module == x.name), None)
+        module = next(
+            (x for x in modules if args.module.lower() == x.name.lower()), None
+        )
         if not module:
             print(f"No module named {args.module}")
             return

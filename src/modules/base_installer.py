@@ -47,3 +47,9 @@ class BaseInstaller(ABC):
 
     def get_edit(self, tag: str):
         return f"DRY_RUN - {tag}" if self.dry_run else tag
+
+    def confirm(self, message: str):
+        if self.dry_run:
+            return True
+        answer = input(f"{message} [(y)/N]: ").lower()
+        return answer in ("", "y")
