@@ -56,7 +56,7 @@ type = "prompt"
   leading_powerline_symbol = ""
   background = "#222F3D"
   foreground = "#E8BC1E"
-  template = "  {{ if .Error }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} {{ end }}"
+  template = "   {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
   [blocks.segments.options]
   fetch_version = true
 
