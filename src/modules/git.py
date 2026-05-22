@@ -21,7 +21,7 @@ class GitInstaller(BaseInstaller):
 
     def calculate_lines(self, lines: list[str]):
         configs = sorted(self.module_config.path.glob("*.gitconfig*"))
-        include_lines = [f"\tpath = {config}\n" for config in configs]
+        include_lines = [f"\tpath = {config.as_posix()}\n" for config in configs]
 
         start_marker = "# dotfiles start"
         end_marker = "# dotfiles end"
