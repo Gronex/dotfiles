@@ -10,7 +10,7 @@ class ConfigFile:
 @dataclass
 class ModuleConfig:
     path: Path
-    description: str | None = field(init=False)
+    description: str | None = field(init=False, default=None)
     enabled: bool = field(init=False, default=True)
 
     @property
@@ -18,7 +18,15 @@ class ModuleConfig:
         return self.path.name
 
     def __post_init__(self):
+        self._load_readme()
         self._load_config()
+
+    def _load_readme(self):
+        readme = self.path / "readme.md"
+        if not readme.exists():
+            return
+        first_paragraph = readme.read_text().split("\n\n")[0]
+        self.description = first_paragraph.strip()
 
     def _load_config(self):
         config_path = self.path / ".dotfiles.module.json"
@@ -27,7 +35,8 @@ class ModuleConfig:
         with config_path.open("r") as f:
             config = json.load(f, object_hook=lambda d: ConfigFile(**d))
         self.enabled = config.enabled
-        self.description = config.description
+        if config.description is not None:
+            self.description = config.description
 
 
 def list_modules(root: Path | None = None) -> list[ModuleConfig]:

@@ -78,7 +78,7 @@ type = "prompt"
   leading_powerline_symbol = ""
   background = "#2A3944"
   foreground = "#94C45C"
-  template = " {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+  template = "  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
   [blocks.segments.options]
   fetch_version = true
 

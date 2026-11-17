@@ -56,16 +56,6 @@ class GitInstaller(BaseInstaller):
         ]
         return lines
 
-    def write_lines(self, target: Path, lines: list[str]):
-        if self.dry_run:
-            print("[DRY_RUN] Would have written file:")
-            print()
-            for line in lines:
-                print(line, end="")
-        else:
-            with target.open("w") as f:
-                f.writelines(lines)
-
     def find_line_index(
         self, lines: list[str], match: re.Pattern[str] | str
     ) -> int | None:

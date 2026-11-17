@@ -21,6 +21,23 @@ def test_description_none_when_no_readme(tmp_path):
     assert config.description is None
 
 
+def test_description_from_module_json_overrides_readme(tmp_path):
+    module = tmp_path / "bash"
+    module.mkdir()
+    (module / "readme.md").write_text("From readme")
+    (module / ".dotfiles.module.json").write_text('{"description": "From json"}')
+    config = ModuleConfig(path=module)
+    assert config.description == "From json"
+
+
+def test_description_is_first_paragraph_of_readme(tmp_path):
+    module = tmp_path / "bash"
+    module.mkdir()
+    (module / "readme.md").write_text("Short description.\n\nLong reference body.")
+    config = ModuleConfig(path=module)
+    assert config.description == "Short description."
+
+
 def test_list_modules_returns_all_subdirs(tmp_path):
     for name in ["bash", "git", "powershell"]:
         (tmp_path / name).mkdir()

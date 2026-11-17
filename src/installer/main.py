@@ -1,6 +1,8 @@
 import argparse
 
 from modules import install_module, list_modules
+from modules.install import MissingInstallerError
+from terminal import BOLD, RED, RESET
 
 
 def main():
@@ -70,7 +72,11 @@ def install(args):
 
     for module in modules:
         print(f"Installing {module.name}")
-        install_module(module, args.dry_run)
+        try:
+            install_module(module, args.dry_run)
+        except MissingInstallerError as e:
+            print(f"\n{BOLD}{RED}Failed to install module '{e.module_config.name}'{RESET}")
+            print(f"Reason: {e.message}")
 
 
 if __name__ == "__main__":

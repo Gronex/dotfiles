@@ -78,10 +78,3 @@ class PowerShellInstaller(BaseInstaller):
         if not self.dry_run:
             source_file.symlink_to(target_file)
 
-    def ensure_path(self, path: Path):
-        if not path.exists():
-            print(f"Creating path {path}")
-            if self.dry_run:
-                print(f"[DRY_RUN]: {path}")
-            else:
-                path.mkdir(parents=True, exist_ok=True)
